@@ -92,7 +92,7 @@ const InsightCard = ({ post }: { post: PostWithExpert }) => {
           <p className="text-xs text-muted-foreground">
             {format(new Date(post.created_at), "MMM d, yyyy 'at' h:mm a")}
           </p>
-          <Link to={`/expert/${post.expert_id}#expert-card`} className="text-xs text-primary hover:underline flex items-center gap-1">
+          <Link to={`/expert/${post.expert_id}`} className="text-xs text-primary hover:underline flex items-center gap-1">
             View Expert <ArrowRight className="h-3 w-3" />
           </Link>
         </div>
