@@ -355,7 +355,7 @@ const ExpertPage = () => {
           {/* Expert Panel */}
           <div className="lg:col-span-1">
             <div className="sticky top-24">
-              <Card>
+              <Card id="expert-card">
                 <CardContent className="p-6">
                   {/* Follow button top-right */}
                   {!isSelf && (
