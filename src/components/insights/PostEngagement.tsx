@@ -23,9 +23,10 @@ interface Comment {
 interface PostEngagementProps {
   postId: string;
   expertId: string;
+  rightAction?: React.ReactNode;
 }
 
-const PostEngagement = ({ postId, expertId }: PostEngagementProps) => {
+const PostEngagement = ({ postId, expertId, rightAction }: PostEngagementProps) => {
   const { user } = useAuth();
   const { toast } = useToast();
   const navigate = useNavigate();
@@ -210,22 +211,25 @@ const PostEngagement = ({ postId, expertId }: PostEngagementProps) => {
 
   return (
     <div className="border-t border-border pt-3 mt-3">
-      <div className="flex items-center gap-4">
-        <button
-          className={`flex items-center gap-1.5 text-sm transition-colors ${liked ? "text-destructive" : "text-muted-foreground hover:text-foreground"}`}
-          onClick={handleLike}
-        >
-          <Heart className={`h-4 w-4 ${liked ? "fill-current" : ""}`} />
-          {likeCount > 0 && <span>{likeCount}</span>}
-        </button>
-        <button
-          className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
-          onClick={() => setShowComments(!showComments)}
-        >
-          <MessageSquare className="h-4 w-4" />
-          {commentCount > 0 && <span>{commentCount}</span>}
-          {showComments ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
-        </button>
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <button
+            className={`flex items-center gap-1.5 text-sm transition-colors ${liked ? "text-destructive" : "text-muted-foreground hover:text-foreground"}`}
+            onClick={handleLike}
+          >
+            <Heart className={`h-4 w-4 ${liked ? "fill-current" : ""}`} />
+            {likeCount > 0 && <span>{likeCount}</span>}
+          </button>
+          <button
+            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            onClick={() => setShowComments(!showComments)}
+          >
+            <MessageSquare className="h-4 w-4" />
+            {commentCount > 0 && <span>{commentCount}</span>}
+            {showComments ? <ChevronUp className="h-3 w-3" /> : <ChevronDown className="h-3 w-3" />}
+          </button>
+        </div>
+        {rightAction && <div>{rightAction}</div>}
       </div>
 
       {showComments && (
