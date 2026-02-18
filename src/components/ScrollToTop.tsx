@@ -10,9 +10,11 @@ const ScrollToTop = () => {
       setTimeout(() => {
         const el = document.querySelector(hash);
         if (el) {
-          el.scrollIntoView({ behavior: "smooth", block: "start" });
+          const headerOffset = 80;
+          const top = el.getBoundingClientRect().top + window.scrollY - headerOffset;
+          window.scrollTo({ top, behavior: "smooth" });
         }
-      }, 100);
+      }, 150);
     } else {
       window.scrollTo(0, 0);
     }
