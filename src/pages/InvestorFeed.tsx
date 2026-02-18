@@ -32,6 +32,7 @@ import {
   X,
 } from "lucide-react";
 import { format } from "date-fns";
+import PostEngagement from "@/components/insights/PostEngagement";
 
 const MARKET_OPTIONS = [
   { value: "stocks", label: "Stocks", icon: "📈" },
@@ -371,6 +372,8 @@ const InvestorFeed = () => {
 
                         {/* Content */}
                         <p className="mt-4 text-foreground leading-relaxed">{post.content}</p>
+
+                        <PostEngagement postId={post.id} expertId={post.expert_id} />
                       </CardContent>
                     </Card>
                   );
