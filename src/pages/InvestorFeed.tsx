@@ -373,6 +373,12 @@ const InvestorFeed = () => {
                         {/* Content */}
                         <p className="mt-4 text-foreground leading-relaxed">{post.content}</p>
 
+                        <div className="mt-4 pt-4 border-t border-border flex items-center justify-end">
+                          <Link to={`/expert/${post.expert_id}`} className="text-xs text-primary hover:underline flex items-center gap-1">
+                            View Expert <ArrowRight className="h-3 w-3" />
+                          </Link>
+                        </div>
+
                         <PostEngagement postId={post.id} expertId={post.expert_id} />
                       </CardContent>
                     </Card>
