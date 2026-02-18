@@ -50,6 +50,7 @@ interface FeedPost {
   visibility: "public" | "private";
   created_at: string;
   expert_id: string;
+  image_url: string | null;
 }
 
 interface SubscriptionWithExpert {
@@ -355,6 +356,18 @@ const InvestorFeed = () => {
                             </Badge>
                           )}
                         </div>
+
+                        {/* Image */}
+                        {post.image_url && (
+                          <div className="mt-4 rounded-lg overflow-hidden">
+                            <img
+                              src={post.image_url}
+                              alt={post.asset || "Insight"}
+                              className="w-full max-h-80 object-contain bg-muted rounded-lg"
+                              loading="lazy"
+                            />
+                          </div>
+                        )}
 
                         {/* Content */}
                         <p className="mt-4 text-foreground leading-relaxed">{post.content}</p>
