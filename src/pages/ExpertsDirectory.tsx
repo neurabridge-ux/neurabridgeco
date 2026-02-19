@@ -1,4 +1,5 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useCallback } from "react";
+import ImageLightbox from "@/components/ImageLightbox";
 import { Link } from "react-router-dom";
 import { usePageSEO } from "@/hooks/usePageSEO";
 import Layout from "@/components/layout/Layout";
@@ -49,6 +50,7 @@ const ExpertsDirectory = () => {
   const [selectedMarket, setSelectedMarket] = useState<string>("all");
   const [priceFilter, setPriceFilter] = useState<"all" | "free" | "paid">("all");
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid");
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   useEffect(() => {
     fetchExperts();
@@ -240,7 +242,8 @@ const ExpertsDirectory = () => {
                           <img
                             src={expert.avatar_url}
                             alt={expert.full_name || ""}
-                            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105 cursor-pointer"
+                            onClick={(e) => { e.preventDefault(); setLightboxSrc(expert.avatar_url); }}
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center bg-primary/10">
@@ -317,6 +320,11 @@ const ExpertsDirectory = () => {
           </div>
         )}
       </div>
+      <ImageLightbox
+        src={lightboxSrc || ""}
+        open={!!lightboxSrc}
+        onOpenChange={(open) => { if (!open) setLightboxSrc(null); }}
+      />
     </Layout>
   );
 };
