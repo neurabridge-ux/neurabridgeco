@@ -79,6 +79,7 @@ const ExpertPage = () => {
   const [avgRating, setAvgRating] = useState<number | null>(null);
   const [ratingCount, setRatingCount] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [postLightboxSrc, setPostLightboxSrc] = useState<string | null>(null);
 
   const isSelf = user?.id === id;
 
@@ -261,8 +262,8 @@ const ExpertPage = () => {
                     <Card key={post.id} className={`overflow-hidden ${!canView ? "bg-muted/30" : ""}`}>
                       <CardContent className="p-0">
                         {post.image_url && canView && (
-                          <div className="aspect-video overflow-hidden">
-                            <img src={post.image_url} alt="" className="h-full w-full object-cover" loading="lazy" />
+                          <div className="aspect-video overflow-hidden cursor-pointer" onClick={() => setPostLightboxSrc(post.image_url)}>
+                            <img src={post.image_url} alt="" className="h-full w-full object-cover transition-opacity hover:opacity-90" loading="lazy" />
                           </div>
                         )}
                         {post.image_url && !canView && (
@@ -519,6 +520,7 @@ const ExpertPage = () => {
           </div>
         </div>
       )}
+      <ImageLightbox src={postLightboxSrc || ""} open={!!postLightboxSrc} onOpenChange={(open) => { if (!open) setPostLightboxSrc(null); }} />
     </Layout>
   );
 };

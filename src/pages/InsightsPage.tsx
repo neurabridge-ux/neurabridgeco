@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import ImageLightbox from "@/components/ImageLightbox";
 import { Link } from "react-router-dom";
 import { usePageSEO } from "@/hooks/usePageSEO";
 import Layout from "@/components/layout/Layout";
@@ -42,6 +43,7 @@ interface PostWithExpert {
 
 const InsightCard = ({ post }: { post: PostWithExpert }) => {
   const market = MARKET_OPTIONS.find((m) => m.value === post.market);
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
 
   return (
     <Card className="overflow-hidden transition-all duration-300 hover:shadow-large hover:-translate-y-1">
@@ -81,8 +83,8 @@ const InsightCard = ({ post }: { post: PostWithExpert }) => {
         </div>
 
         {post.image_url && (
-          <div className="mt-4 rounded-lg overflow-hidden">
-            <img src={post.image_url} alt={post.asset || "Insight"} className="w-full max-h-80 object-contain bg-muted rounded-lg" loading="lazy" />
+          <div className="mt-4 rounded-lg overflow-hidden cursor-pointer" onClick={() => setLightboxSrc(post.image_url)}>
+            <img src={post.image_url} alt={post.asset || "Insight"} className="w-full max-h-80 object-contain bg-muted rounded-lg transition-opacity hover:opacity-90" loading="lazy" />
           </div>
         )}
 
@@ -98,6 +100,7 @@ const InsightCard = ({ post }: { post: PostWithExpert }) => {
         </div>
 
         <PostEngagement postId={post.id} expertId={post.expert_id} />
+        <ImageLightbox src={lightboxSrc || ""} open={!!lightboxSrc} onOpenChange={(open) => { if (!open) setLightboxSrc(null); }} />
       </CardContent>
     </Card>
   );

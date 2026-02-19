@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import ImageLightbox from "@/components/ImageLightbox";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
@@ -71,6 +72,7 @@ const InvestorFeed = () => {
   const [loadingData, setLoadingData] = useState(true);
   const [filterExpert, setFilterExpert] = useState<string>("all");
   const [filterMarket, setFilterMarket] = useState<string>("all");
+  const [postLightboxSrc, setPostLightboxSrc] = useState<string | null>(null);
 
   useEffect(() => {
     if (!authLoading && (!user || userRole !== "investor")) {
@@ -360,11 +362,11 @@ const InvestorFeed = () => {
 
                         {/* Image */}
                         {post.image_url && (
-                          <div className="mt-4 rounded-lg overflow-hidden">
+                          <div className="mt-4 rounded-lg overflow-hidden cursor-pointer" onClick={() => setPostLightboxSrc(post.image_url)}>
                             <img
                               src={post.image_url}
                               alt={post.asset || "Insight"}
-                              className="w-full max-h-80 object-contain bg-muted rounded-lg"
+                              className="w-full max-h-80 object-contain bg-muted rounded-lg transition-opacity hover:opacity-90"
                               loading="lazy"
                             />
                           </div>
@@ -397,6 +399,7 @@ const InvestorFeed = () => {
           </div>
         )}
       </div>
+      <ImageLightbox src={postLightboxSrc || ""} open={!!postLightboxSrc} onOpenChange={(open) => { if (!open) setPostLightboxSrc(null); }} />
     </Layout>
   );
 };
