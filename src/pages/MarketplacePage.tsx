@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import ImageLightbox from "@/components/ImageLightbox";
 import { Link } from "react-router-dom";
 import { usePageSEO } from "@/hooks/usePageSEO";
 import Layout from "@/components/layout/Layout";
@@ -53,6 +54,7 @@ const MarketplacePage = () => {
     description: "Browse educational courses, webinars, and exclusive investment opportunities from top market experts on NeuraBridge.",
     canonical: "/marketplace",
   });
+  const [lightboxSrc, setLightboxSrc] = useState<string | null>(null);
   const [items, setItems] = useState<MarketplaceItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
@@ -190,8 +192,8 @@ const MarketplacePage = () => {
               return (
                 <Card key={item.id} className="group overflow-hidden transition-all duration-300 hover:shadow-large hover:-translate-y-1 flex flex-col">
                   {item.image_url && (
-                    <div className="relative aspect-video overflow-hidden">
-                      <img src={item.image_url} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                    <div className="relative aspect-video overflow-hidden cursor-pointer" onClick={(e) => { e.preventDefault(); setLightboxSrc(item.image_url); }}>
+                      <img src={item.image_url} alt={item.title} className="h-full w-full object-cover transition-all duration-500 group-hover:scale-105 hover:opacity-90" loading="lazy" />
                       <Badge className="absolute top-3 left-3 gap-1" variant="secondary">
                         <TypeIcon className={`h-3 w-3 ${cfg.color}`} />
                         {cfg.label}
@@ -249,6 +251,7 @@ const MarketplacePage = () => {
 
         <p className="mt-8 text-center text-xs text-muted-foreground">Educational content only. Not financial advice.</p>
       </div>
+      <ImageLightbox src={lightboxSrc || ""} open={!!lightboxSrc} onOpenChange={(open) => { if (!open) setLightboxSrc(null); }} />
     </Layout>
   );
 };

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import Layout from "@/components/layout/Layout";
+import ImageLightbox from "@/components/ImageLightbox";
 import CourseDetailedDisplay from "@/components/marketplace/CourseDetailedDisplay";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -50,6 +51,7 @@ const MarketplaceDetailPage = () => {
   const [reviewScore, setReviewScore] = useState(0);
   const [reviewComment, setReviewComment] = useState("");
   const [submittingReview, setSubmittingReview] = useState(false);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   useEffect(() => {
     if (id) fetchItem();
@@ -187,8 +189,8 @@ const MarketplaceDetailPage = () => {
         <div className="grid gap-8 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
             {item.image_url && (
-              <div className="rounded-xl overflow-hidden">
-                <img src={item.image_url} alt={item.title} className="w-full aspect-video object-cover" />
+              <div className="rounded-xl overflow-hidden cursor-pointer" onClick={() => setLightboxOpen(true)}>
+                <img src={item.image_url} alt={item.title} className="w-full aspect-video object-cover transition-opacity hover:opacity-90" />
               </div>
             )}
 
@@ -318,6 +320,7 @@ const MarketplaceDetailPage = () => {
           </div>
         </div>
       </div>
+      <ImageLightbox src={item.image_url || ""} alt={item.title} open={lightboxOpen} onOpenChange={setLightboxOpen} />
     </Layout>
   );
 };
