@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import ImageLightbox from "@/components/ImageLightbox";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { usePageSEO } from "@/hooks/usePageSEO";
 import Layout from "@/components/layout/Layout";
@@ -77,6 +78,7 @@ const ExpertPage = () => {
   const [loading, setLoading] = useState(true);
   const [avgRating, setAvgRating] = useState<number | null>(null);
   const [ratingCount, setRatingCount] = useState(0);
+  const [lightboxOpen, setLightboxOpen] = useState(false);
 
   const isSelf = user?.id === id;
 
@@ -367,10 +369,21 @@ const ExpertPage = () => {
                     </div>
                   )}
                   <div className="flex flex-col items-center">
-                    <Avatar className="h-20 w-20 border-4 border-border ring-4 ring-primary/10">
+                    <Avatar
+                      className="h-20 w-20 border-4 border-border ring-4 ring-primary/10 cursor-pointer transition-opacity hover:opacity-80"
+                      onClick={() => expert.avatar_url && setLightboxOpen(true)}
+                    >
                       <AvatarImage src={expert.avatar_url || undefined} />
                       <AvatarFallback className="bg-primary/10 text-primary text-2xl font-semibold">{(expert.full_name || "?").charAt(0)}</AvatarFallback>
                     </Avatar>
+                    {expert.avatar_url && (
+                      <ImageLightbox
+                        src={expert.avatar_url}
+                        alt={expert.full_name || "Expert"}
+                        open={lightboxOpen}
+                        onOpenChange={setLightboxOpen}
+                      />
+                    )}
                     <h1 className="mt-3 font-display text-2xl font-bold text-foreground">{expert.full_name || "Expert"}</h1>
                     {expert.credentials && <p className="mt-0.5 text-sm text-muted-foreground">{expert.credentials}</p>}
                     {expert.headline && <p className="mt-1 text-sm font-medium text-foreground/80 italic text-center">"{expert.headline}"</p>}
