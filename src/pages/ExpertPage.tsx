@@ -326,8 +326,8 @@ const ExpertPage = () => {
                       return (
                         <Card key={item.id} className="group overflow-hidden transition-all duration-300 hover:shadow-large hover:-translate-y-1">
                           {item.image_url && (
-                            <div className="relative aspect-video overflow-hidden">
-                              <img src={item.image_url} alt={item.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                            <div className="relative aspect-video overflow-hidden cursor-pointer" onClick={(e) => { e.preventDefault(); setPostLightboxSrc(item.image_url); }}>
+                              <img src={item.image_url} alt={item.title} className="h-full w-full object-cover transition-all duration-500 group-hover:scale-105 hover:opacity-90" loading="lazy" />
                               <Badge className="absolute top-3 left-3 gap-1" variant="secondary"><TypeIcon className={`h-3 w-3 ${cfg.color}`} />{cfg.label}</Badge>
                             </div>
                           )}
