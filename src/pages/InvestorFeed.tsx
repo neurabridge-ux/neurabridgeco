@@ -366,7 +366,7 @@ const InvestorFeed = () => {
                             <img
                               src={post.image_url}
                               alt={post.asset || "Insight"}
-                              className="w-full max-h-80 object-contain bg-muted rounded-lg transition-opacity hover:opacity-90"
+                              className="w-full max-h-80 object-cover bg-muted rounded-lg transition-opacity hover:opacity-90"
                               loading="lazy"
                             />
                           </div>
