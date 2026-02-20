@@ -84,7 +84,7 @@ const InsightCard = ({ post }: { post: PostWithExpert }) => {
 
         {post.image_url && (
           <div className="mt-4 rounded-lg overflow-hidden cursor-pointer" onClick={() => setLightboxSrc(post.image_url)}>
-            <img src={post.image_url} alt={post.asset || "Insight"} className="w-full max-h-80 object-contain bg-muted rounded-lg transition-opacity hover:opacity-90" loading="lazy" />
+            <img src={post.image_url} alt={post.asset || "Insight"} className="w-full max-h-80 object-cover bg-muted rounded-lg transition-opacity hover:opacity-90" loading="lazy" />
           </div>
         )}
 
